@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": { 
+        "vnetname": {
+            "type": "string",
+            "defaultValue": "satya-vnet"
+        },
+        "subnetname": {
+            "type": "string",
+            "defaultValue": "satya-sub1"
+        },
+        "vnetaddressprefix": {
+            "type": "array",
+            "defaultValue": ["192.168.0.0/16"]
+        },
+        "subnetprefix": {
+            "type": "string",
+            "defaultValue": "192.168.0.0/20"
+        }
+     },
+    "resources": [ 
+        {
+            "name": "[parameters('vnetname')]",
+            "apiVersion": "2018-11-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "westus2",
+            "tags": {
+                "environment": "dev"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('vnetaddressprefix')]"
+                },
+                "subnets": [
+                    {
+                       "name": "[parameters('subnetname')]",
+                       "properties": {
+                           "addressPrefix": "[parameters('subnetprefix')]"
+                       } 
+                    }
+                ]
+
+            }
+        }
+     ],
+    "outputs": {  }
+}
